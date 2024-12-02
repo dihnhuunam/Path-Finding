@@ -1,0 +1,20 @@
+{
+	"BUILD_DIR" : "/home/dihnhuunam/Workspace/Path-Finding/out/build/qt-x86_64-debug/PathFinding_autogen",
+	"CMAKE_BINARY_DIR" : "/home/dihnhuunam/Workspace/Path-Finding/out/build/qt-x86_64-debug",
+	"CMAKE_CURRENT_BINARY_DIR" : "/home/dihnhuunam/Workspace/Path-Finding/out/build/qt-x86_64-debug",
+	"CMAKE_CURRENT_SOURCE_DIR" : "/home/dihnhuunam/Workspace/Path-Finding",
+	"CMAKE_SOURCE_DIR" : "/home/dihnhuunam/Workspace/Path-Finding",
+	"GENERATOR" : "Ninja",
+	"INCLUDE_DIR" : "/home/dihnhuunam/Workspace/Path-Finding/out/build/qt-x86_64-debug/PathFinding_autogen/include",
+	"INPUTS" : [ "/home/dihnhuunam/Workspace/Path-Finding/map.qml" ],
+	"LOCK_FILE" : "/home/dihnhuunam/Workspace/Path-Finding/out/build/qt-x86_64-debug/CMakeFiles/PathFinding_autogen.dir/AutoRcc_Resources_EWIEGA46WW_Lock.lock",
+	"MULTI_CONFIG" : false,
+	"OPTIONS" : [ "-name", "Resources" ],
+	"OUTPUT_CHECKSUM" : "EWIEGA46WW",
+	"OUTPUT_NAME" : "qrc_Resources.cpp",
+	"RCC_EXECUTABLE" : "/home/dihnhuunam/Qt5.13.2/5.13.2/gcc_64/bin/rcc",
+	"RCC_LIST_OPTIONS" : [ "--list" ],
+	"SETTINGS_FILE" : "/home/dihnhuunam/Workspace/Path-Finding/out/build/qt-x86_64-debug/CMakeFiles/PathFinding_autogen.dir/AutoRcc_Resources_EWIEGA46WW_Used.txt",
+	"SOURCE" : "/home/dihnhuunam/Workspace/Path-Finding/Resources.qrc",
+	"VERBOSITY" : 0
+}
