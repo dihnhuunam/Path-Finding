@@ -14,12 +14,18 @@ set(CMAKE_AUTORCC ON)
 
 find_package(Qt5 COMPONENTS Widgets Quick QuickWidgets Gui Location Positioning REQUIRED)
 
+# Thêm đường dẫn tìm kiếm UI
+set(CMAKE_AUTOUIC_SEARCH_PATHS ${CMAKE_SOURCE_DIR}/forms)
+
+include_directories(include)
+
 add_executable(PathFinding
-    main.cpp
-    mainwindow.cpp
-    mainwindow.h
-    mainwindow.ui
-    Resources.qrc
+    src/main.cpp
+    src/mainwindow.cpp
+    include/mainwindow.h
+    forms/mainwindow.ui
+    forms/map.qml
+    forms/Resources.qrc
 )
 
 target_link_libraries(PathFinding PRIVATE
@@ -30,4 +36,3 @@ target_link_libraries(PathFinding PRIVATE
     Qt5::Location
     Qt5::Positioning
 )
-
