@@ -3,9 +3,9 @@
 #include "routegraph.h"
 
 #include <QQuickItem>
+#include <QtWidgets>
 #include <QIcon>
 #include <QFile>
-#include <QtWidgets>
 
 #include <vector>
 #include <queue>
@@ -75,7 +75,7 @@ void MainWindow::setupStyles()
 
     ui->distanceLabel->setVisible(false);
     ui->timeLabel->setVisible(false);
-    
+
     QSize iconSize(28, 28);
     ui->searchButton->setIcon(QIcon(searchIcon));
     ui->searchButton->setIconSize(iconSize);
@@ -107,7 +107,6 @@ void MainWindow::setupMap()
     int phanthiet = routeGraph->addNode(10.928891, 108.100487, "Phan Thiết");
     int vungtau = routeGraph->addNode(10.346577, 107.084417, "Vũng Tàu");
     int hochiminh = routeGraph->addNode(10.762622, 106.660172, "TP.HCM");
-
     int haiphong = routeGraph->addNode(20.844912, 106.688084, "Hải Phòng");
     int caobang = routeGraph->addNode(22.665418, 106.258111, "Cao Bằng");
     int langson = routeGraph->addNode(21.853708, 106.761519, "Lạng Sơn");
@@ -130,7 +129,6 @@ void MainWindow::setupMap()
     routeGraph->addEdge(nhatrang, phanthiet, 230.0);
     routeGraph->addEdge(phanthiet, hochiminh, 200.0);
     routeGraph->addEdge(hochiminh, vungtau, 95.0);
-
     routeGraph->addEdge(hanoi, haiphong, 105.0);
     routeGraph->addEdge(hanoi, langson, 154.0);
     routeGraph->addEdge(langson, caobang, 170.0);

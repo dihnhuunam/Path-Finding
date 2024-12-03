@@ -3,5 +3,6 @@
         <file>map.qml</file>
         <file>styles/styles.qss</file>
         <file>styles/search.png</file>
+        <file>map_data.json</file>
     </qresource>
 </RCC>
