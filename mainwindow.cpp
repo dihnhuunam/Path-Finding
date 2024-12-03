@@ -74,8 +74,8 @@ public:
         vector<double> dist(n, numeric_limits<double>::max());
         vector<int> prev(n, -1);
         priority_queue<pair<double, int>,
-                            vector<pair<double, int>>,
-                            greater<pair<double, int>>>
+                       vector<pair<double, int>>,
+                       greater<pair<double, int>>>
             pq;
 
         dist[start] = 0;
