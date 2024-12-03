@@ -14,6 +14,9 @@
 
 using namespace std;
 
+const QString styles = ":/styles/styles.qss";
+const QString searchIcon = ":/styles/search.png";
+
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent), ui(new Ui::MainWindow), routeGraph(new RouteGraph())
 {
@@ -54,20 +57,27 @@ void MainWindow::setupLayout()
 
 void MainWindow::setupStyles()
 {
-    QFile styleFile(":/styles/styles.qss");
+    // Load styles.qss
+    QFile styleFile(styles);
     if (styleFile.open(QFile::ReadOnly))
     {
         setStyleSheet(QString::fromUtf8(styleFile.readAll()));
     }
 
+    ui->comboBox->addItem(QString::fromUtf8("Algorithms"));
+    ui->comboBox->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
+
     ui->fromLineEdit->setPlaceholderText("From");
+    ui->fromLineEdit->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
+
     ui->toLineEdit->setPlaceholderText("To");
+    ui->toLineEdit->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
 
     ui->distanceLabel->setVisible(false);
     ui->timeLabel->setVisible(false);
-
+    
     QSize iconSize(28, 28);
-    ui->searchButton->setIcon(QIcon(":/styles/search.jpg"));
+    ui->searchButton->setIcon(QIcon(searchIcon));
     ui->searchButton->setIconSize(iconSize);
     ui->searchButton->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
 

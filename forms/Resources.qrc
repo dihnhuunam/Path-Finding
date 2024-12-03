@@ -2,6 +2,6 @@
     <qresource prefix="/">
         <file>map.qml</file>
         <file>styles/styles.qss</file>
-        <file>styles/search.jpg</file>
+        <file>styles/search.png</file>
     </qresource>
 </RCC>

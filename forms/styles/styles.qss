@@ -1,50 +1,38 @@
 /* styles.qss */
 
-/* Đặt kiểu cho toàn bộ cửa sổ */
-QMainWindow {
-    background-color: #f0f0f0;
-}
-
-/* Kiểu cho các nút */
-/* QPushButton {
-    background-color: #0078d7;
-    color: white;
-    border-radius: 5px;
-    padding: 5px 10px;
-    font-size: 14px;
-} */
-QPushButton:hover {
-    background-color: #005a9e;
-}
-QPushButton:pressed {
-    background-color: #003f6f;
-}
-
-/* Kiểu cho QLabel */
-QLabel {
-    color: #333333;
-    font-size: 14px;
-}
-
-/* Kiểu cho QLineEdit */
-QLineEdit {
+QComboBox {
     border: 1px solid #cccccc;
-    border-radius: 5px;
-    padding: 5px;
+    border-radius: 10px;
     font-size: 14px;
     background-color: white;
+    min-height: 30px;
+    min-width: 80px; 
 }
 
-/* Kiểu cho QQuickWidget (nếu cần tùy chỉnh thêm) */
-QQuickWidget {
+QPushButton#searchButton {
+    border-radius: 10px;
+}
+
+QPushButton#searchButton:hover {
+    background-color: rgba(255, 255, 255, 240); 
+    color: #333333; 
+}
+
+QPushButton#searchButton:pressed {
+    background-color: #E0E0E0; 
+    color: #000000; 
+}
+
+QLabel {
+    color: #333333; 
+    font-size: 14px;
+}
+
+QLineEdit {
     border: 1px solid #cccccc;
-    border-radius: 5px;
-    margin: 5px;
-}
-
-/* Kiểu cho QLabel hiển thị khoảng cách và thời gian */
-#distanceLabel, #timeLabel {
-    color: #0078d7;
-    font-size: 16px;
-    font-weight: bold;
+    border-radius: 10px;
+    font-size: 14px;
+    background-color: white;
+    min-height: 30px;
+    min-width: 150px; 
 }
