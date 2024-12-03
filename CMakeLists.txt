@@ -20,14 +20,6 @@ include_directories(include)
 file(GLOB_RECURSE SOURCES src/*.cpp)
 file(GLOB_RECURSE HEADERS include/*.h)
 
-# add_executable(PathFinding
-#     ${SOURCES}
-#     ${HEADERS}
-#     forms/mainwindow.ui
-#     forms/map.qml
-#     forms/Resources.qrc
-# )
-
 add_executable(PathFinding
     src/main.cpp
     src/mainwindow.cpp
@@ -37,8 +29,7 @@ add_executable(PathFinding
     include/routegraph.h
     include/findingalgorithm.h
     forms/mainwindow.ui
-    forms/map.qml
-    forms/Resources.qrc
+    resources/Resources.qrc
 )
 
 target_link_libraries(PathFinding PRIVATE
