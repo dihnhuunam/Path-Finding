@@ -20,9 +20,22 @@ include_directories(include)
 file(GLOB_RECURSE SOURCES src/*.cpp)
 file(GLOB_RECURSE HEADERS include/*.h)
 
+# add_executable(PathFinding
+#     ${SOURCES}
+#     ${HEADERS}
+#     forms/mainwindow.ui
+#     forms/map.qml
+#     forms/Resources.qrc
+# )
+
 add_executable(PathFinding
-    ${SOURCES}
-    ${HEADERS}
+    src/main.cpp
+    src/mainwindow.cpp
+    src/routegraph.cpp
+    src/findingalgorithm.cpp
+    include/mainwindow.h
+    include/routegraph.h
+    include/findingalgorithm.h
     forms/mainwindow.ui
     forms/map.qml
     forms/Resources.qrc

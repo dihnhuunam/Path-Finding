@@ -1,5 +1,6 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+#include "routegraph.h"
 
 #include <QQuickItem>
 #include <vector>
@@ -8,111 +9,6 @@
 #include <cmath>
 
 using namespace std;
-// Helper struct for graph nodes
-struct Node
-{
-    double lat;
-    double lng;
-    QString name; // Thêm tên địa điểm
-};
-
-// Graph for routing
-class RouteGraph
-{
-private:
-    vector<Node> nodes;
-    vector<vector<pair<int, double>>> adjacencyList;
-
-    // Haversine formula to calculate distance between two coordinates
-    double haversineDistance(double lat1, double lon1, double lat2, double lon2)
-    {
-        const double R = 6371.0; // Earth radius in kilometers
-        double dLat = (lat2 - lat1) * M_PI / 180.0;
-        double dLon = (lon2 - lon1) * M_PI / 180.0;
-        double a = sin(dLat / 2) * sin(dLat / 2) +
-                   cos(lat1 * M_PI / 180.0) * cos(lat2 * M_PI / 180.0) *
-                       sin(dLon / 2) * sin(dLon / 2);
-        double c = 2 * atan2(sqrt(a), sqrt(1 - a));
-        return R * c;
-    }
-
-public:
-    // Add a node to the graph
-    int addNode(double lat, double lng, const QString &name)
-    {
-        nodes.push_back({lat, lng, name});
-        adjacencyList.push_back({});
-        return nodes.size() - 1;
-    }
-
-    // Add an edge between two nodes with actual road distance
-    void addEdge(int from, int to, double roadDistance = -1)
-    {
-        // If road distance is not provided, calculate using haversine
-        if (roadDistance < 0)
-        {
-            roadDistance = haversineDistance(
-                nodes[from].lat, nodes[from].lng,
-                nodes[to].lat, nodes[to].lng);
-            // Add 20% to account for road curvature
-            roadDistance *= 1.2;
-        }
-        adjacencyList[from].push_back({to, roadDistance});
-        adjacencyList[to].push_back({from, roadDistance}); // Undirected graph
-    }
-
-    // Get node information
-    Node getNode(int index) const
-    {
-        return nodes[index];
-    }
-
-    // Dijkstra's algorithm to find shortest path
-    vector<Node> findShortestPath(int start, int end)
-    {
-        int n = nodes.size();
-        vector<double> dist(n, numeric_limits<double>::max());
-        vector<int> prev(n, -1);
-        priority_queue<pair<double, int>,
-                       vector<pair<double, int>>,
-                       greater<pair<double, int>>>
-            pq;
-
-        dist[start] = 0;
-        pq.push({0, start});
-
-        while (!pq.empty())
-        {
-            int current = pq.top().second;
-            double currentDist = pq.top().first;
-            pq.pop();
-
-            if (current == end)
-                break;
-
-            for (const auto &edge : adjacencyList[current])
-            {
-                double newDist = currentDist + edge.second;
-                if (newDist < dist[edge.first])
-                {
-                    dist[edge.first] = newDist;
-                    prev[edge.first] = current;
-                    pq.push({newDist, edge.first});
-                }
-            }
-        }
-
-        // Reconstruct path
-        vector<Node> path;
-        for (int at = end; at != -1; at = prev[at])
-        {
-            path.push_back(nodes[at]);
-        }
-        reverse(path.begin(), path.end());
-
-        return path;
-    }
-};
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent), ui(new Ui::MainWindow), routeGraph(new RouteGraph())
