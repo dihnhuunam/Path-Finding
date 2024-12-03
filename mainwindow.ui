@@ -32,9 +32,9 @@
        <widget class="QLineEdit" name="toLineEdit"/>
       </item>
       <item>
-       <widget class="QPushButton" name="searchButton">
+       <widget class="QPushButton" name="pushButton">
         <property name="text">
-         <string/>
+         <string>PushButton</string>
         </property>
        </widget>
       </item>

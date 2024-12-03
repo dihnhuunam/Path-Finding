@@ -7,7 +7,6 @@
 #include <limits>
 #include <QString>
 
-// Node struct lưu thông tin địa điểm
 struct Node
 {
     double lat;
@@ -20,14 +19,12 @@ class FindingAlgorithm
 public:
     virtual ~FindingAlgorithm() = default;
 
-    // Hàm thuần ảo, lớp con phải triển khai
     virtual std::vector<Node> findShortestPath(int start, int end) = 0;
 
 protected:
-    std::vector<Node> nodes; // Danh sách các node
-    std::vector<std::vector<std::pair<int, double>>> adjacencyList; // Danh sách kề
+    std::vector<Node> nodes; 
+    std::vector<std::vector<std::pair<int, double>>> adjacencyList;
 
-    // Hàm tính khoảng cách giữa hai tọa độ
     double calculateDistance(double lat1, double lon1, double lat2, double lon2);
 
     // Thuật toán Dijkstra

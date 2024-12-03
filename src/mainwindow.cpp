@@ -3,6 +3,7 @@
 #include "routegraph.h"
 
 #include <QQuickItem>
+#include <QIcon>
 #include <vector>
 #include <queue>
 #include <limits>
@@ -14,18 +15,40 @@ MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent), ui(new Ui::MainWindow), routeGraph(new RouteGraph())
 {
     ui->setupUi(this);
+    setupStyles();
+    setupMap();
+}
+
+MainWindow::~MainWindow()
+{
+    delete ui;
+    delete routeGraph;
+}
+
+void MainWindow::setupStyles()
+{
     ui->fromLineEdit->setPlaceholderText("From");
     ui->toLineEdit->setPlaceholderText("To");
 
+    ui->distanceLabel->setVisible(false);
+    ui->timeLabel->setVisible(false);
+
+    QSize iconSize(28, 28);
+    ui->searchButton->setIcon(QIcon(":/styles/search.jpg"));
+    ui->searchButton->setIconSize(iconSize);
+    ui->searchButton->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
+
     ui->mapQuickWidget->setSource(QUrl(QStringLiteral("qrc:/map.qml")));
     ui->mapQuickWidget->show();
+}
 
+void MainWindow::setupMap()
+{
     auto obj = ui->mapQuickWidget->rootObject();
     connect(this, SIGNAL(setCenter(QVariant, QVariant)), obj, SLOT(setCenter(QVariant, QVariant)));
     connect(this, SIGNAL(addMarker(QVariant, QVariant)), obj, SLOT(addMarker(QVariant, QVariant)));
     connect(this, SIGNAL(drawRoute(QVariant)), obj, SLOT(drawRoute(QVariant)));
 
-    // Thêm các thành phố và điểm trung gian chính
     int hanoi = routeGraph->addNode(21.012915, 105.85667, "Hà Nội");
     int ninhbinh = routeGraph->addNode(20.250676, 105.974060, "Ninh Bình");
     int thanhhoa = routeGraph->addNode(19.806665, 105.784873, "Thanh Hóa");
@@ -42,7 +65,6 @@ MainWindow::MainWindow(QWidget *parent)
     int vungtau = routeGraph->addNode(10.346577, 107.084417, "Vũng Tàu");
     int hochiminh = routeGraph->addNode(10.762622, 106.660172, "TP.HCM");
 
-    // Thêm các đường cao tốc
     int haiphong = routeGraph->addNode(20.844912, 106.688084, "Hải Phòng");
     int caobang = routeGraph->addNode(22.665418, 106.258111, "Cao Bằng");
     int langson = routeGraph->addNode(21.853708, 106.761519, "Lạng Sơn");
@@ -51,35 +73,31 @@ MainWindow::MainWindow(QWidget *parent)
     int sonla = routeGraph->addNode(21.327667, 103.919266, "Sơn La");
     int hagiang = routeGraph->addNode(22.823477, 104.978103, "Hà Giang");
 
-    // Thêm các kết nối theo quốc lộ 1A và đường cao tốc
-    routeGraph->addEdge(hanoi, ninhbinh, 93.7);       // QL1A
-    routeGraph->addEdge(ninhbinh, thanhhoa, 140.0);   // QL1A
-    routeGraph->addEdge(thanhhoa, vinh, 180.0);       // QL1A
-    routeGraph->addEdge(vinh, hatinh, 50.0);          // QL1A
-    routeGraph->addEdge(hatinh, dongha, 280.0);       // QL1A
-    routeGraph->addEdge(dongha, hue, 70.0);           // QL1A
-    routeGraph->addEdge(hue, danang, 108.0);          // QL1A
-    routeGraph->addEdge(danang, quangngai, 130.0);    // QL1A
-    routeGraph->addEdge(quangngai, quynhon, 210.0);   // QL1A
-    routeGraph->addEdge(quynhon, tuyhoa, 120.0);      // QL1A
-    routeGraph->addEdge(tuyhoa, nhatrang, 120.0);     // QL1A
-    routeGraph->addEdge(nhatrang, phanthiet, 230.0);  // QL1A
-    routeGraph->addEdge(phanthiet, hochiminh, 200.0); // QL1A
-    routeGraph->addEdge(hochiminh, vungtau, 95.0);    // QL51
+    routeGraph->addEdge(hanoi, ninhbinh, 93.7);
+    routeGraph->addEdge(ninhbinh, thanhhoa, 140.0);
+    routeGraph->addEdge(thanhhoa, vinh, 180.0);
+    routeGraph->addEdge(vinh, hatinh, 50.0);
+    routeGraph->addEdge(hatinh, dongha, 280.0);
+    routeGraph->addEdge(dongha, hue, 70.0);
+    routeGraph->addEdge(hue, danang, 108.0);
+    routeGraph->addEdge(danang, quangngai, 130.0);
+    routeGraph->addEdge(quangngai, quynhon, 210.0);
+    routeGraph->addEdge(quynhon, tuyhoa, 120.0);
+    routeGraph->addEdge(tuyhoa, nhatrang, 120.0);
+    routeGraph->addEdge(nhatrang, phanthiet, 230.0);
+    routeGraph->addEdge(phanthiet, hochiminh, 200.0);
+    routeGraph->addEdge(hochiminh, vungtau, 95.0);
 
-    // Thêm các kết nối cao tốc và quốc lộ khác
-    routeGraph->addEdge(hanoi, haiphong, 105.0);  // CT.05
-    routeGraph->addEdge(hanoi, langson, 154.0);   // CT.03
-    routeGraph->addEdge(langson, caobang, 170.0); // QL4A
-    routeGraph->addEdge(hanoi, laocai, 245.0);    // CT.05
-    routeGraph->addEdge(hanoi, hagiang, 320.0);   // QL2
-    routeGraph->addEdge(hanoi, sonla, 320.0);     // QL6
-    routeGraph->addEdge(sonla, dienbien, 180.0);  // QL6
+    routeGraph->addEdge(hanoi, haiphong, 105.0);
+    routeGraph->addEdge(hanoi, langson, 154.0);
+    routeGraph->addEdge(langson, caobang, 170.0);
+    routeGraph->addEdge(hanoi, laocai, 245.0);
+    routeGraph->addEdge(hanoi, hagiang, 320.0);
+    routeGraph->addEdge(hanoi, sonla, 320.0);
+    routeGraph->addEdge(sonla, dienbien, 180.0);
 
-    // Tìm đường từ Hà Nội đến TP.HCM
-    vector<Node> route = routeGraph->findShortestPath(laocai, vinh);
+    vector<Node> route = routeGraph->findShortestPath(hanoi, hochiminh);
 
-    // Gửi tọa độ route để vẽ trên bản đồ
     QVariantList routeCoordinates;
     for (const auto &node : route)
     {
@@ -90,10 +108,4 @@ MainWindow::MainWindow(QWidget *parent)
 
     // Đặt tâm bản đồ tại Hà Nội
     emit setCenter(21.012915, 105.85667);
-}
-
-MainWindow::~MainWindow()
-{
-    delete ui;
-    delete routeGraph;
 }

@@ -1,5 +1,7 @@
 <RCC>
     <qresource prefix="/">
         <file>map.qml</file>
+        <file>styles/styles.qss</file>
+        <file>styles/search.jpg</file>
     </qresource>
 </RCC>

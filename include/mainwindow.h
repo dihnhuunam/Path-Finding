@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include <QVariant>
+#include "routegraph.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui
@@ -10,8 +11,6 @@ namespace Ui
     class MainWindow;
 }
 QT_END_NAMESPACE
-
-class RouteGraph; // Forward declaration
 
 class MainWindow : public QMainWindow
 {
@@ -29,5 +28,8 @@ signals:
 private:
     Ui::MainWindow *ui;
     RouteGraph *routeGraph;
+
+    void setupStyles();
+    void setupMap();
 };
 #endif // MAINWINDOW_H
