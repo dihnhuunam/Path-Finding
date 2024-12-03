@@ -118,6 +118,8 @@ MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent), ui(new Ui::MainWindow), routeGraph(new RouteGraph())
 {
     ui->setupUi(this);
+    ui->fromLineEdit->setPlaceholderText("From");
+    ui->toLineEdit->setPlaceholderText("To");
 
     ui->mapQuickWidget->setSource(QUrl(QStringLiteral("qrc:/map.qml")));
     ui->mapQuickWidget->show();
