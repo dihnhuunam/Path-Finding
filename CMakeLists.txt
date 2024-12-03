@@ -11,18 +11,18 @@ set(CMAKE_INCLUDE_CURRENT_DIR ON)
 set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
+set(CMAKE_AUTOUIC_SEARCH_PATHS ${CMAKE_SOURCE_DIR}/forms)
 
 find_package(Qt5 COMPONENTS Widgets Quick QuickWidgets Gui Location Positioning REQUIRED)
 
-# Thêm đường dẫn tìm kiếm UI
-set(CMAKE_AUTOUIC_SEARCH_PATHS ${CMAKE_SOURCE_DIR}/forms)
-
 include_directories(include)
 
+file(GLOB_RECURSE SOURCES src/*.cpp)
+file(GLOB_RECURSE HEADERS include/*.h)
+
 add_executable(PathFinding
-    src/main.cpp
-    src/mainwindow.cpp
-    include/mainwindow.h
+    ${SOURCES}
+    ${HEADERS}
     forms/mainwindow.ui
     forms/map.qml
     forms/Resources.qrc
