@@ -4,6 +4,9 @@
 
 #include <QQuickItem>
 #include <QIcon>
+#include <QFile>
+#include <QtWidgets>
+
 #include <vector>
 #include <queue>
 #include <limits>
@@ -15,6 +18,7 @@ MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent), ui(new Ui::MainWindow), routeGraph(new RouteGraph())
 {
     ui->setupUi(this);
+    setupLayout();
     setupStyles();
     setupMap();
 }
@@ -25,8 +29,37 @@ MainWindow::~MainWindow()
     delete routeGraph;
 }
 
+void MainWindow::setupLayout()
+{
+    // Row 1 (input): comboBox, fromLineEdit, toLineEdit, searchButton
+    auto inputHorizontalLayout = new QHBoxLayout();
+    inputHorizontalLayout->addWidget(ui->comboBox);
+    inputHorizontalLayout->addWidget(ui->fromLineEdit);
+    inputHorizontalLayout->addWidget(ui->toLineEdit);
+    inputHorizontalLayout->addWidget(ui->searchButton);
+
+    // Row 2 (output): distanceLabel, timeLabel
+    auto outputHorizontalLayout = new QHBoxLayout();
+    outputHorizontalLayout->addWidget(ui->distanceLabel);
+    outputHorizontalLayout->addWidget(ui->timeLabel);
+
+    // mainLayout contains Row 1, Row 2, and mapQuickWidget
+    auto mainLayout = new QVBoxLayout(ui->centralwidget);
+    mainLayout->addLayout(inputHorizontalLayout);
+    mainLayout->addLayout(outputHorizontalLayout);
+    mainLayout->addWidget(ui->mapQuickWidget);
+
+    ui->centralwidget->setLayout(mainLayout);
+}
+
 void MainWindow::setupStyles()
 {
+    QFile styleFile(":/styles/styles.qss");
+    if (styleFile.open(QFile::ReadOnly))
+    {
+        setStyleSheet(QString::fromUtf8(styleFile.readAll()));
+    }
+
     ui->fromLineEdit->setPlaceholderText("From");
     ui->toLineEdit->setPlaceholderText("To");
 

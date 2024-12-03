@@ -29,6 +29,7 @@ private:
     Ui::MainWindow *ui;
     RouteGraph *routeGraph;
 
+    void setupLayout();
     void setupStyles();
     void setupMap();
 };
