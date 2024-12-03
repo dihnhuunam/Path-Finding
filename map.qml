@@ -63,10 +63,8 @@ Rectangle {
             var coord = QtPositioning.coordinate(coordinates[i], coordinates[i+1])
             routeCoords.push(coord)
             
-            // Add markers for start and end points
-            if (i === 0 || i === coordinates.length - 2) {
-                addMarker(coordinates[i], coordinates[i+1])
-            }
+            // Add markers for all points along the route
+            addMarker(coordinates[i], coordinates[i+1])
         }
 
         var routeItem = comRoute.createObject(window, {
@@ -85,8 +83,8 @@ Rectangle {
             sourceItem: Image {
                 id: image
                 source: "http://maps.gstatic.com/mapfiles/ridefinder-images/mm_20_red.png"
-                width: 30
-                height: 30
+                width: 15
+                height: 15
             }
         }
     }
