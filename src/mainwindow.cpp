@@ -15,7 +15,7 @@
 using namespace std;
 
 const QString styles = ":/styles/styles.qss";
-const QString searchIcon = ":/styles/search.png";
+const QString searchIcon = ":/images/search.png";
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent), ui(new Ui::MainWindow), routeGraph(new RouteGraph())
