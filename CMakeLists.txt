@@ -17,9 +17,6 @@ find_package(Qt5 COMPONENTS Widgets Quick QuickWidgets Gui Location Positioning 
 
 include_directories(include)
 
-file(GLOB_RECURSE SOURCES src/*.cpp)
-file(GLOB_RECURSE HEADERS include/*.h)
-
 add_executable(PathFinding
     src/main.cpp
     src/mainwindow.cpp
