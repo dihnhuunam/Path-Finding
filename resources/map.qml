@@ -76,9 +76,9 @@ Rectangle {
 
             sourceItem: Image {
                 id: image
-                source: "http://maps.gstatic.com/mapfiles/ridefinder-images/mm_20_red.png"
-                width: 15
-                height: 15
+                source: "qrc:/images/marker.png"
+                width: 30
+                height: 30
             }
         }
     }

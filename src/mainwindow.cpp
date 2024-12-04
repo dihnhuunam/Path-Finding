@@ -92,4 +92,5 @@ void MainWindow::setupMap()
     connect(this, SIGNAL(addMarker(QVariant, QVariant)), obj, SLOT(addMarker(QVariant, QVariant)));
     connect(this, SIGNAL(drawRoute(QVariant)), obj, SLOT(drawRoute(QVariant)));
     emit setCenter(21.028511, 105.804817);
+    emit addMarker(21.028511, 105.804817);
 }
