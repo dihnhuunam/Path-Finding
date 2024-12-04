@@ -20,21 +20,18 @@ Rectangle {
         anchors.fill: parent
         plugin: mapPlugin
         center: QtPositioning.coordinate(oldLat, oldLng)
-        zoomLevel: 6  // Start with a wider view
+        zoomLevel: 14 
 
-        // Dynamically adjust zoom after route is drawn
         onMapItemsChanged: {
             if (mapView.mapItems.length > 0) {
-                // Wait a short moment to ensure all items are added
                 zoomTimer.restart()
             }
         }
     }
 
-    // Timer to delay zoom adjustment
     Timer {
         id: zoomTimer
-        interval: 100  // Short delay to ensure map items are fully processed
+        interval: 100  
         onTriggered: {
             mapView.fitViewportToMapItems()
         }
@@ -54,16 +51,13 @@ Rectangle {
     }
 
     function drawRoute(coordinates) {
-        // Clear previous routes and markers
         mapView.clearMapItems()
 
-        // Create route line from coordinates
         var routeCoords = []
         for (var i = 0; i < coordinates.length; i += 2) {
             var coord = QtPositioning.coordinate(coordinates[i], coordinates[i+1])
             routeCoords.push(coord)
             
-            // Add markers for all points along the route
             addMarker(coordinates[i], coordinates[i+1])
         }
 
