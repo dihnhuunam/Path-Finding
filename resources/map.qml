@@ -13,14 +13,9 @@ Rectangle {
     Plugin {
         id: mapPlugin
         name: "osm"
-        // Sử dụng HTTPS và một tile server khác đáng tin cậy hơn
         PluginParameter {
-            name: "osm.mapping.custom.host"
-            value: "https://tile.thunderforest.com/atlas/{z}/{x}/{y}.png?apikey=999b0099646c4febbfe23286ddcfe853"
-        }
-        PluginParameter {
-            name: "osm.mapping.providersrepository.disabled"
-            value: true
+            name: 'osm.mapping.offline.directory'
+            value: '/home/dihnhuunam/Workspace/Path-Finding/map.osm'
         }
     }
 
@@ -28,25 +23,9 @@ Rectangle {
         id: mapView
         anchors.fill: parent
         plugin: mapPlugin
-        // Đặt mapType mặc định
-        activeMapType: supportedMapTypes[0]
+        activeMapType: supportedMapTypes[1] 
         center: QtPositioning.coordinate(oldLat, oldLng)
         zoomLevel: 14
-
-        onMapItemsChanged: {
-            if (mapView.mapItems.length > 0) {
-                zoomTimer.restart()
-            }
-        }
-    }
-
-
-    Timer {
-        id: zoomTimer
-        interval: 100  
-        onTriggered: {
-            mapView.fitViewportToMapItems()
-        }
     }
 
     function setCenter(lat, lng) {
