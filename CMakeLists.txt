@@ -13,6 +13,7 @@ set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 set(CMAKE_AUTOUIC_SEARCH_PATHS ${CMAKE_SOURCE_DIR}/forms)
 
+find_package(OpenSSL REQUIRED)
 find_package(Qt5 COMPONENTS Widgets Quick QuickWidgets Gui Location Positioning REQUIRED)
 
 include_directories(include)
@@ -36,4 +37,6 @@ target_link_libraries(PathFinding PRIVATE
     Qt5::QuickWidgets
     Qt5::Location
     Qt5::Positioning
+    OpenSSL::SSL
+    OpenSSL::Crypto
 )
