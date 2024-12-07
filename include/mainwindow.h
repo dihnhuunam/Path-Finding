@@ -25,12 +25,21 @@ signals:
     void addMarker(QVariant lat, QVariant lng);
     void drawRoute(QVariant coordinates);
 
+private slots:
+    void handleMapClick(qreal lat, qreal lng); 
+    void onSearchClicked();
+
 private:
     Ui::MainWindow *ui;
     RouteGraph *routeGraph;
 
+    qreal startLat, startLng; 
+    qreal endLat, endLng;     
+    bool isSelectingStart = true;
+
     void setupLayout();
     void setupStyles();
     void setupMap();
+    int findNearestNode(double lat, double lng);
 };
 #endif // MAINWINDOW_H

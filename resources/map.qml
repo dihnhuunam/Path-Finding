@@ -10,6 +10,9 @@ Rectangle {
     property Component comMarker: mapMarker
     property Component comRoute: routeLine
 
+   // Thay đổi kiểu tham số của signal
+    signal mapClicked(real lat, real lng)  // Thay vì double
+
     Plugin {
         id: mapPlugin
         name: "osm"
@@ -26,6 +29,14 @@ Rectangle {
         activeMapType: supportedMapTypes[1] 
         center: QtPositioning.coordinate(oldLat, oldLng)
         zoomLevel: 14
+
+        MouseArea {
+            anchors.fill: parent
+            onClicked: {
+                var coord = mapView.toCoordinate(Qt.point(mouse.x, mouse.y))
+                window.mapClicked(coord.latitude, coord.longitude)
+            }
+        }
     }
 
     function setCenter(lat, lng) {

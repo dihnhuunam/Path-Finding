@@ -34,30 +34,28 @@ MainWindow::~MainWindow()
 
 void MainWindow::setupLayout()
 {
-    // Row 1 (input): comboBox, fromLineEdit, toLineEdit, searchButton
     auto inputHorizontalLayout = new QHBoxLayout();
     inputHorizontalLayout->addWidget(ui->comboBox);
     inputHorizontalLayout->addWidget(ui->fromLineEdit);
     inputHorizontalLayout->addWidget(ui->toLineEdit);
     inputHorizontalLayout->addWidget(ui->searchButton);
 
-    // Row 2 (output): distanceLabel, timeLabel
     auto outputHorizontalLayout = new QHBoxLayout();
     outputHorizontalLayout->addWidget(ui->distanceLabel);
     outputHorizontalLayout->addWidget(ui->timeLabel);
 
-    // mainLayout contains Row 1, Row 2, and mapQuickWidget
     auto mainLayout = new QVBoxLayout(ui->centralwidget);
     mainLayout->addLayout(inputHorizontalLayout);
     mainLayout->addLayout(outputHorizontalLayout);
     mainLayout->addWidget(ui->mapQuickWidget);
 
     ui->centralwidget->setLayout(mainLayout);
+
+    connect(ui->searchButton, &QPushButton::clicked, this, &MainWindow::onSearchClicked);
 }
 
 void MainWindow::setupStyles()
 {
-    // Load styles.qss
     QFile styleFile(styles);
     if (styleFile.open(QFile::ReadOnly))
     {
@@ -91,6 +89,64 @@ void MainWindow::setupMap()
     connect(this, SIGNAL(setCenter(QVariant, QVariant)), obj, SLOT(setCenter(QVariant, QVariant)));
     connect(this, SIGNAL(addMarker(QVariant, QVariant)), obj, SLOT(addMarker(QVariant, QVariant)));
     connect(this, SIGNAL(drawRoute(QVariant)), obj, SLOT(drawRoute(QVariant)));
+    connect(obj, SIGNAL(mapClicked(qreal, qreal)), this, SLOT(handleMapClick(qreal, qreal)));
+
     emit setCenter(21.028511, 105.804817);
-    emit addMarker(21.028511, 105.804817);
+}
+
+void MainWindow::handleMapClick(qreal lat, qreal lng) // Thay vì double
+{
+    if (isSelectingStart)
+    {
+        startLat = lat;
+        startLng = lng;
+        ui->fromLineEdit->setText(QString::number(lat) + ", " + QString::number(lng));
+        emit addMarker(lat, lng);
+    }
+    else
+    {
+        endLat = lat;
+        endLng = lng;
+        ui->toLineEdit->setText(QString::number(lat) + ", " + QString::number(lng));
+        emit addMarker(lat, lng);
+    }
+    isSelectingStart = !isSelectingStart;
+}
+
+void MainWindow::onSearchClicked()
+{
+    int startNode = findNearestNode(startLat, startLng);
+    int endNode = findNearestNode(endLat, endLng);
+
+    std::vector<Node> path = routeGraph->findShortestPath(startNode, endNode);
+
+    QVariantList coordinates;
+    for (const Node &node : path)
+    {
+        coordinates.append(node.lat);
+        coordinates.append(node.lng);
+    }
+
+    emit drawRoute(coordinates);
+}
+
+int MainWindow::findNearestNode(double lat, double lng)
+{
+    int nearestNode = 0;
+    double minDistance = std::numeric_limits<double>::max();
+
+    for (int i = 0; i < routeGraph->nodes.size(); i++)
+    {
+        double dist = FindingAlgorithm::calculateDistance(
+            lat, lng,
+            routeGraph->nodes[i].lat,
+            routeGraph->nodes[i].lng);
+        if (dist < minDistance)
+        {
+            minDistance = dist;
+            nearestNode = i;
+        }
+    }
+
+    return nearestNode;
 }
