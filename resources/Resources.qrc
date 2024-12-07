@@ -4,6 +4,5 @@
         <file>styles/styles.qss</file>
         <file>images/search.png</file>
         <file>images/marker.png</file>
-        <file>map_data.json</file>
     </qresource>
 </RCC>

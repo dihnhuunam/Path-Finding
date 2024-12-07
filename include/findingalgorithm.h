@@ -22,6 +22,7 @@ protected:
     std::vector<int> dijkstra(int start, int end, std::vector<double> &distances);
     std::vector<int> aStar(int start, int end);
     std::vector<Node> reconstructPath(const std::vector<int> &previous, int end);
+    std::vector<Node> findShortestPath(int start, int end);
 
 public:
     friend class MainWindow;

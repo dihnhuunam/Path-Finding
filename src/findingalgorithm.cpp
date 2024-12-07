@@ -93,3 +93,10 @@ std::vector<Node> FindingAlgorithm::reconstructPath(const std::vector<int> &prev
     std::reverse(path.begin(), path.end());
     return path;
 }
+
+std::vector<Node> FindingAlgorithm::findShortestPath(int start, int end)
+{
+    std::vector<double> distances;
+    auto previous = dijkstra(start, end, distances);
+    return reconstructPath(previous, end);
+}

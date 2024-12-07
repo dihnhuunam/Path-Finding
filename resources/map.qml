@@ -10,8 +10,7 @@ Rectangle {
     property Component comMarker: mapMarker
     property Component comRoute: routeLine
 
-   // Thay đổi kiểu tham số của signal
-    signal mapClicked(real lat, real lng)  // Thay vì double
+    signal mapClicked(real lat, real lng)
 
     Plugin {
         id: mapPlugin
@@ -74,8 +73,7 @@ Rectangle {
         MapQuickItem {
             id: markerImg
             anchorPoint.x: image.width/4
-            anchorPoint.y: image.height
-
+            anchorPoint.y: image.height/4
             sourceItem: Image {
                 id: image
                 source: "qrc:/images/marker.png"

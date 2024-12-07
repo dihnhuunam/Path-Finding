@@ -3,7 +3,7 @@
 
 #include <QMainWindow>
 #include <QVariant>
-#include "routegraph.h"
+#include "findingalgorithm.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui
@@ -26,15 +26,15 @@ signals:
     void drawRoute(QVariant coordinates);
 
 private slots:
-    void handleMapClick(qreal lat, qreal lng); 
+    void handleMapClick(qreal lat, qreal lng);
     void onSearchClicked();
 
 private:
     Ui::MainWindow *ui;
-    RouteGraph *routeGraph;
+    FindingAlgorithm *findingAlgorithm;
 
-    qreal startLat, startLng; 
-    qreal endLat, endLng;     
+    qreal startLat, startLng;
+    qreal endLat, endLng;
     bool isSelectingStart = true;
 
     void setupLayout();

@@ -1,6 +1,6 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-#include "routegraph.h"
+#include "findingalgorithm.h"
 
 #include <QQuickItem>
 #include <QtWidgets>
@@ -18,7 +18,7 @@ const QString styles = ":/styles/styles.qss";
 const QString searchIcon = ":/images/search.png";
 
 MainWindow::MainWindow(QWidget *parent)
-    : QMainWindow(parent), ui(new Ui::MainWindow), routeGraph(new RouteGraph())
+    : QMainWindow(parent), ui(new Ui::MainWindow), findingAlgorithm(new FindingAlgorithm())
 {
     ui->setupUi(this);
     setupLayout();
@@ -29,7 +29,7 @@ MainWindow::MainWindow(QWidget *parent)
 MainWindow::~MainWindow()
 {
     delete ui;
-    delete routeGraph;
+    delete findingAlgorithm;
 }
 
 void MainWindow::setupLayout()
@@ -94,7 +94,7 @@ void MainWindow::setupMap()
     emit setCenter(21.028511, 105.804817);
 }
 
-void MainWindow::handleMapClick(qreal lat, qreal lng) // Thay vì double
+void MainWindow::handleMapClick(qreal lat, qreal lng)
 {
     if (isSelectingStart)
     {
@@ -118,7 +118,7 @@ void MainWindow::onSearchClicked()
     int startNode = findNearestNode(startLat, startLng);
     int endNode = findNearestNode(endLat, endLng);
 
-    std::vector<Node> path = routeGraph->findShortestPath(startNode, endNode);
+    std::vector<Node> path = findingAlgorithm->findShortestPath(startNode, endNode);
 
     QVariantList coordinates;
     for (const Node &node : path)
@@ -135,12 +135,12 @@ int MainWindow::findNearestNode(double lat, double lng)
     int nearestNode = 0;
     double minDistance = std::numeric_limits<double>::max();
 
-    for (int i = 0; i < routeGraph->nodes.size(); i++)
+    for (int i = 0; i < findingAlgorithm->nodes.size(); i++)
     {
         double dist = FindingAlgorithm::calculateDistance(
             lat, lng,
-            routeGraph->nodes[i].lat,
-            routeGraph->nodes[i].lng);
+            findingAlgorithm->nodes[i].lat,
+            findingAlgorithm->nodes[i].lng);
         if (dist < minDistance)
         {
             minDistance = dist;
