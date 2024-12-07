@@ -21,10 +21,8 @@ include_directories(include)
 add_executable(PathFinding
     src/main.cpp
     src/mainwindow.cpp
-    src/routegraph.cpp
     src/findingalgorithm.cpp
     include/mainwindow.h
-    include/routegraph.h
     include/findingalgorithm.h
     forms/mainwindow.ui
     resources/Resources.qrc
