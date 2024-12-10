@@ -18,12 +18,16 @@ protected:
     std::vector<Node> nodes;
     std::vector<std::vector<std::pair<int, double>>> adjacencyList;
 
+public:
     static double calculateDistance(double lat1, double lon1, double lat2, double lon2);
+
+private:
     std::vector<int> aStar(int start, int end);
     std::vector<Node> reconstructPath(const std::vector<int> &previous, int end);
-    std::vector<Node> findShortestPath(int start, int end);
 
 public:
+    std::vector<Node> findShortestPath(int start, int end);
+
     friend class MainWindow;
 };
 

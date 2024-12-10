@@ -5,41 +5,40 @@
 #include <QVariant>
 #include "findingalgorithm.h"
 
-QT_BEGIN_NAMESPACE
-namespace Ui
-{
-    class MainWindow;
+namespace Ui {
+class MainWindow;
 }
-QT_END_NAMESPACE
 
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
 
 public:
-    MainWindow(QWidget *parent = nullptr);
+    explicit MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
+
+private slots:
+    void handleMapClick(qreal lat, qreal lng);
+    void onSearchClicked();
+    void calculateDistanceFromCoordinates(QVariantList coordinates);
 
 signals:
     void setCenter(QVariant lat, QVariant lng);
     void addMarker(QVariant lat, QVariant lng);
     void drawRoute(QVariant coordinates);
 
-private slots:
-    void handleMapClick(qreal lat, qreal lng);
-    void onSearchClicked();
-
 private:
     Ui::MainWindow *ui;
     FindingAlgorithm *findingAlgorithm;
-
-    qreal startLat, startLng;
-    qreal endLat, endLng;
+    
     bool isSelectingStart = true;
+    double startLat = 0, startLng = 0;
+    double endLat = 0, endLng = 0;
 
     void setupLayout();
     void setupStyles();
     void setupMap();
     int findNearestNode(double lat, double lng);
 };
+
 #endif // MAINWINDOW_H

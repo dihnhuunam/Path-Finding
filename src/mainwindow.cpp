@@ -110,6 +110,28 @@ void MainWindow::handleMapClick(qreal lat, qreal lng)
     isSelectingStart = !isSelectingStart;
 }
 
+void MainWindow::calculateDistanceFromCoordinates(QVariantList coordinates)
+{
+    if (coordinates.size() < 4)
+        return; // Cần ít nhất 2 điểm
+
+    double totalDistance = 0;
+    for (int i = 0; i < coordinates.size() - 2; i += 2)
+    {
+        double lat1 = coordinates[i].toDouble();
+        double lng1 = coordinates[i + 1].toDouble();
+        double lat2 = coordinates[i + 2].toDouble();
+        double lng2 = coordinates[i + 3].toDouble();
+
+        double distance = FindingAlgorithm::calculateDistance(lat1, lng1, lat2, lng2);
+        totalDistance += distance;
+    }
+
+    // Hiển thị tổng khoảng cách
+    ui->distanceLabel->setText(QString("Total Distance: %1 km").arg(totalDistance, 0, 'f', 2));
+    ui->distanceLabel->setVisible(true);
+}
+
 void MainWindow::onSearchClicked()
 {
     int startNode = findNearestNode(startLat, startLng);
@@ -125,6 +147,7 @@ void MainWindow::onSearchClicked()
     }
 
     emit drawRoute(coordinates);
+    calculateDistanceFromCoordinates(coordinates);
 }
 
 int MainWindow::findNearestNode(double lat, double lng)
