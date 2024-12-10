@@ -16,38 +16,6 @@ double FindingAlgorithm::calculateDistance(double lat1, double lon1, double lat2
     return R * 2 * atan2(sqrt(a), sqrt(1 - a));
 }
 
-// Dijkstra Algorithm
-std::vector<int> FindingAlgorithm::dijkstra(int start, int end, std::vector<double> &distances)
-{
-    int n = nodes.size();
-    distances.assign(n, std::numeric_limits<double>::max());
-    std::vector<int> previous(n, -1);
-    std::priority_queue<std::pair<double, int>, std::vector<std::pair<double, int>>, std::greater<>> pq;
-
-    distances[start] = 0;
-    pq.push({0, start});
-
-    while (!pq.empty())
-    {
-        auto [currentDist, current] = pq.top();
-        pq.pop();
-        if (current == end)
-            break;
-
-        for (auto &[next, weight] : adjacencyList[current])
-        {
-            double newDist = currentDist + weight;
-            if (newDist < distances[next])
-            {
-                distances[next] = newDist;
-                previous[next] = current;
-                pq.push({newDist, next});
-            }
-        }
-    }
-    return previous;
-}
-
 // A* Algorithm
 std::vector<int> FindingAlgorithm::aStar(int start, int end)
 {
@@ -96,7 +64,6 @@ std::vector<Node> FindingAlgorithm::reconstructPath(const std::vector<int> &prev
 
 std::vector<Node> FindingAlgorithm::findShortestPath(int start, int end)
 {
-    std::vector<double> distances;
-    auto previous = dijkstra(start, end, distances);
+    auto previous = aStar(start, end);
     return reconstructPath(previous, end);
 }
