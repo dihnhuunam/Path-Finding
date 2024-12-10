@@ -94,19 +94,6 @@
      <string>TextLabel</string>
     </property>
    </widget>
-   <widget class="QLabel" name="timeLabel">
-    <property name="geometry">
-     <rect>
-      <x>82</x>
-      <y>206</y>
-      <width>66</width>
-      <height>19</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>TextLabel</string>
-    </property>
-   </widget>
   </widget>
  </widget>
  <customwidgets>

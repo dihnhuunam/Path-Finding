@@ -40,13 +40,9 @@ void MainWindow::setupLayout()
     inputHorizontalLayout->addWidget(ui->toLineEdit);
     inputHorizontalLayout->addWidget(ui->searchButton);
 
-    auto outputHorizontalLayout = new QHBoxLayout();
-    outputHorizontalLayout->addWidget(ui->distanceLabel);
-    outputHorizontalLayout->addWidget(ui->timeLabel);
-
     auto mainLayout = new QVBoxLayout(ui->centralwidget);
     mainLayout->addLayout(inputHorizontalLayout);
-    mainLayout->addLayout(outputHorizontalLayout);
+    mainLayout->addWidget(ui->distanceLabel);
     mainLayout->addWidget(ui->mapQuickWidget);
 
     ui->centralwidget->setLayout(mainLayout);
@@ -72,7 +68,8 @@ void MainWindow::setupStyles()
     ui->toLineEdit->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
 
     ui->distanceLabel->setVisible(false);
-    ui->timeLabel->setVisible(false);
+    ui->distanceLabel->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
+    ui->distanceLabel->setAlignment(Qt::AlignCenter);
 
     QSize iconSize(28, 28);
     ui->searchButton->setIcon(QIcon(searchIcon));
